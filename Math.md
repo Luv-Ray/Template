@@ -20,8 +20,8 @@ Matrix operator*(const Matrix &a, const Matrix &b) {
 	for (int i = 0; i < N; i++) {
 		for (int j = 0; j < N; j++) {
 			for (int k = 0; k < N; k++) {
-				c.m[i][j] += a.m[i][k] * b.m[k][j] % mod;
-				c.m[i][j] %= mod;
+				c.m[i][j] += a.m[i][k] * b.m[k][j] % MOD;
+				c.m[i][j] %= MOD;
 			}
 		}
 	}
@@ -33,7 +33,7 @@ Matrix operator+(const Matrix &a, const Matrix &b) {
 	c.init();
 	for (int i = 0; i < N; i++) {
 		for (int j = 0; j < N; j++) {
-			c.m[i][j] = (a.m[i][j] + b.m[i][j]) % mod;
+			c.m[i][j] = (a.m[i][j] + b.m[i][j]) % MOD;
 		}
 	}
 	return c;
@@ -44,7 +44,7 @@ Matrix operator-(const Matrix &a, const Matrix &b) {
 	c.init();
 	for (int i = 0; i < N; i++) {
 		for (int j = 0; j < N; j++) {
-			c.m[i][j] = ((a.m[i][j] - b.m[i][j]) % mod + mod) % mod;
+			c.m[i][j] = ((a.m[i][j] - b.m[i][j]) % MOD + MOD) % MOD;
 		}
 	}
 	return c;
@@ -85,3 +85,20 @@ Matrix Mqpow(Matrix a, LL b) {
 }
 ```
 ## 组合数学
+### 求组合数
+```
+int fac[N], inv[N]
+void init(int n) { // 预处理逆元
+	fac[0] = inv[0] = 1;
+	for(int i = 1; i <= n; i++) {
+		fac[i] = fac[i - 1] * i % MOD;
+	}
+	inv[n] = qpow(fac[n], MOD - 2);
+	for (int i = n - 1; i; i--) {
+		inv[i] = inv[i + 1] * (i + 1) % MOD;
+	}
+}
+int C(int n, int m) {
+	return fac[n] * inv[m] % MOD * inv[n - m] % MOD;
+}
+```
