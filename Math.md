@@ -4,8 +4,10 @@
 ```
 struct Matrix {
     int a[N][N];
-    inline void init { memset(a, 0, sizeof a); }
-	inline void unit {
+    inline void init() { // 零矩阵
+		memset(a, 0, sizeof a);
+	}
+	inline void unit() { // 单位矩阵
 		init();
 		for (int i = 0; i < N; i++) a[i][i] = 1;
 	}
@@ -13,20 +15,6 @@ struct Matrix {
 ```
 #### 矩阵运算
 ```
-//重载矩阵乘法
-Matrix operator*(const Matrix &a, const Matrix &b) {
-	Matrix c;
-	c.init();
-	for (int i = 0; i < N; i++) {
-		for (int j = 0; j < N; j++) {
-			for (int k = 0; k < N; k++) {
-				c.m[i][j] += a.m[i][k] * b.m[k][j] % MOD;
-				c.m[i][j] %= MOD;
-			}
-		}
-	}
-	return c;
-}
 //重载矩阵加法
 Matrix operator+(const Matrix &a, const Matrix &b) {
 	Matrix c;
@@ -45,6 +33,20 @@ Matrix operator-(const Matrix &a, const Matrix &b) {
 	for (int i = 0; i < N; i++) {
 		for (int j = 0; j < N; j++) {
 			c.m[i][j] = ((a.m[i][j] - b.m[i][j]) % MOD + MOD) % MOD;
+		}
+	}
+	return c;
+}
+//重载矩阵乘法
+Matrix operator*(const Matrix &a, const Matrix &b) {
+	Matrix c;
+	c.init();
+	for (int i = 0; i < N; i++) {
+		for (int j = 0; j < N; j++) {
+			for (int k = 0; k < N; k++) {
+				c.m[i][j] += a.m[i][k] * b.m[k][j] % MOD;
+				c.m[i][j] %= MOD;
+			}
 		}
 	}
 	return c;
@@ -82,6 +84,50 @@ Matrix Mqpow(Matrix a, LL b) {
 		b >>= 1;
 	}
 	return res;
+}
+```
+### 高斯消元
+```
+Matrix m;
+int r, c;
+cin >> r >> c;
+for (int i = 0; i < r; i++) {
+	for (int j = 0; j < c; j++) {
+		cin >> m.a[i][j];
+	}
+}
+
+for (int i = 0; i < r; i++) {
+	int max = i;
+	for (int j = i + 1; j < c; j++) {
+		if (fabs(m.a[j][i] > fabs(m.a[max][i])))
+			max = j;
+	}
+	if (fabs(m.a[max][i]) < EPS) {
+		cout << "No Solution" << endl;
+		return;
+	}
+	if (max != i) std::swap(m.a[max], m.a[i]);
+
+	double div = m.a[i][i];
+	for (int j = i; j < c; j++) {
+		m.a[i][j] /= div;
+	}
+	for (int j = i + 1; j < r; j++) {
+		div = m.a[j][i];
+		for (int k = i; k < c; k++) {
+			m.a[j][k] -= m.a[i][k] * div;
+		}
+	}
+}
+
+std::vector<double> ans(r);
+ans[r - 1] = m.a[r - 1][c - 1];
+for (int i = r - 2; i >= 0; i--) {
+	ans[i] = m.a[i][c - 1];
+	for (int j = i + 1; j < r; j++) {
+		ans[i] -= m.a[i][j] * ans[j];
+	}
 }
 ```
 ## 组合数学
