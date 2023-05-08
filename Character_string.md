@@ -156,32 +156,28 @@ while (i < ls) {
 ```
 std::string s, str;
 int p[N];
-void add() { // 保证字符串长度为奇数
-    str = "@#";
-    int len = s.size();
-    for (int i = 0; i < len; i++) {
-        str += s[i];
+void init() {
+    str += '$';
+    str += '#';
+    for (auto i : s) {
+        str += i;
         str += '#';
     }
-    str += '$';
+    str += '&';
 }
-int mana() {
-    int max = 0;
-    int len = str.size() - 1;
-    int r = 0, pos = 0;
-    for (int i = 1; i < len; i++) {
-        p[i] = r > i ? std::min(r - i, p[(pos << 1) - i]) : 1;
-        while (str[i + p[i]] == str[i - p[i]]) p[i]++; // 中心拓展
-        if (i + p[i] > r) { // 更新右范围
-            pos = i;
-            r = i + p[i];
-        }
-    }
-    for (int i = 1; i < len; i++) {
-        if (max < p[i]) max = p[i];
-        p[i] = 0;
-    }
-    return max - 1;
+int manacher() {
+    int rmid = 0, rboun = 0;
+	int len = str.size() - 2;
+    for (int i = 1; i <= len; i++) {
+        int j = 2 * rmid - i;
+		p[i] = rboun > i ? std::min(rboun - i, p[j]) : 0;
+        while (str[i - 1 - p[i]] == str[i + 1 + p[i]]) p[i]++;
+        if (i + p[i] > rboun) {
+			rmid = i;
+			rboun = i + p[i];
+		}
+	}
+    return 0;
 }
 ```
 ## 字符串哈希
