@@ -62,17 +62,15 @@ int euler(int n) {
 ### 欧拉函数打表（效率同线性筛版）
 ```
 int E[N];
-void n_euler_q(int n) // 欧拉函数打表
-{
-	for (int i = 2; i <= n; i++)
-	{
-		if (!E[i])
-			for (int j = i; j <= n; j += i)
-			{
+void n_euler_q(int n) {
+	for (int i = 2; i <= n; i++) {
+		if (!E[i]) {
+			for (int j = i; j <= n; j += i) {
 				if (!E[j])
 					E[j] = j;
 				E[j] = E[j] / i * (i - 1);
 			}
+		}
 	}
 }
 ```
@@ -110,8 +108,7 @@ bool MRtest(LL n) {
 如果 $p$ 是一个质数，而整数 $a$ 不是 $p$ 的倍数, 则有 $a ^{ p - 1 } \equiv 1 \pmod p$
 ### 扩展欧几里得
 ```
-int exgcd(int a, int b, int &x, int &y) // 扩展欧几里得
-{
+int exgcd(int a, int b, int &x, int &y) {
 	if (!b) {
 		x = 1, y = 0;
 		return a;
@@ -128,8 +125,7 @@ int exgcd(int a, int b, int &x, int &y) // 扩展欧几里得
 2. $p$ 不必为质数：扩展欧几里得
 3. 要求 $p$ 为质数：费马小定理 `qpow(n, m - 2, m)`，运行慢，基本不用
 ```
-int inv(int n, int m) // n的乘法逆元
-{
+int inv(int n, int m) { // n的乘法逆元
 	int x, y;
 	exgcd(n, m, x, y);
 	return (x % m + m) % m; // 将范围约束在[0,m-1]以内
@@ -138,11 +134,9 @@ int inv(int n, int m) // n的乘法逆元
 #### 线性求逆元
 ```
 int inv[N];
-void n_inv(int n, int m) // [1,n] 线性求逆元，使用范围同费马小定理
-{
+void n_inv(int n, int m) { // [1,n] 线性求逆元，使用范围同费马小定理
 	inv[1] = 1;
-	for (int i = 2; i <= n; ++i)
-	{
+	for (int i = 2; i <= n; ++i) {
 		inv[i] = (-1 * m / i + m) * inv[m % i] % m;
 	}
 }

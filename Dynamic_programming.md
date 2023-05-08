@@ -18,15 +18,12 @@ for (int i = 1; i <= n; i++) {
 ### 有依赖的背包模板
 ```
 int dp[N], last[N];
-void solve()
-{
+void solve() {
     int n = read(), V = read(); // n主件个数，V总钱数
-    for (int i = 1; i <= n; i++)
-    {
+    for (int i = 1; i <= n; i++) {
         memcpy(last, dp, (V + 1) << 2); // 需要继承上一组物品的最优情况，可避免使用二维数组
         int v = read(), m = read();    // v主件费用，m附件个数
-        for (int k = 1; k <= m; k++)
-        {
+        for (int k = 1; k <= m; k++) {
             int c = read(), w = read(); // c附件费用、w附件价值
             for (int j = V - v; j >= c; j--)
                 last[j] = max(last[j], last[j - c] + w);
