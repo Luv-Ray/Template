@@ -21,7 +21,7 @@ Matrix operator+(const Matrix &a, const Matrix &b) {
 	c.init();
 	for (int i = 0; i < N; i++) {
 		for (int j = 0; j < N; j++) {
-			c.m[i][j] = (a.m[i][j] + b.m[i][j]) % MOD;
+			c.a[i][j] = (a.a[i][j] + b.a[i][j]) % MOD;
 		}
 	}
 	return c;
@@ -32,7 +32,7 @@ Matrix operator-(const Matrix &a, const Matrix &b) {
 	c.init();
 	for (int i = 0; i < N; i++) {
 		for (int j = 0; j < N; j++) {
-			c.m[i][j] = ((a.m[i][j] - b.m[i][j]) % MOD + MOD) % MOD;
+			c.a[i][j] = ((a.a[i][j] - b.a[i][j]) % MOD + MOD) % MOD;
 		}
 	}
 	return c;
@@ -44,8 +44,8 @@ Matrix operator*(const Matrix &a, const Matrix &b) {
 	for (int i = 0; i < N; i++) {
 		for (int j = 0; j < N; j++) {
 			for (int k = 0; k < N; k++) {
-				c.m[i][j] += a.m[i][k] * b.m[k][j] % MOD;
-				c.m[i][j] %= MOD;
+				c.a[i][j] += a.a[i][k] * b.a[k][j] % MOD;
+				c.a[i][j] %= MOD;
 			}
 		}
 	}
@@ -55,7 +55,7 @@ Matrix operator*(const Matrix &a, const Matrix &b) {
 bool operator==(const Matrix &a, const Matrix &b) {
 	for (int i = 0; i < N; i++) {
 		for (int j = 0; j < N; j++) {
-			if (a.m[i][j] != b.m[i][j]) {
+			if (a.a[i][j] != b.a[i][j]) {
 				return 0;
 			}
 		}
@@ -65,7 +65,7 @@ bool operator==(const Matrix &a, const Matrix &b) {
 bool operator!=(const Matrix &a, const Matrix &b) {
 	for (int i = 0; i < N; i++) {
 		for (int j = 0; j < N; j++) {
-			if (a.m[i][j] != b.m[i][j]) {
+			if (a.a[i][j] != b.a[i][j]) {
 				return 1;
 			}
 		}

@@ -92,7 +92,7 @@ inline int read() {
 
 改为左对齐`printf("%-N.Ms", str);`
 
-  
+ 
 N,M可以动态指定，用 \* 代替M或者N，然后在参数列表里加上一个数字参数。
 
 例子：`printf("%-*.*s", 5,2,"123");`
@@ -142,7 +142,7 @@ memset(a,0xFE,sizeof(a)); //set double to -5.31401e+303
 ```
 
 ## 卡常细节
-位操作具备更快的运算速度（编译器比你懂）
+位操作具备更快的运算速度（编译器都懂）
 
 `std::vector<bool>`的效率会很慢，用`std::bitset`
 
