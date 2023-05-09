@@ -91,12 +91,10 @@
 ```
 char m[N];
 int nex[N];
-void get_nex(int l)
-{
+void get_nex(int l) {
     int i = 0, j = -1;
     nex[i] = j;
-    while (i < l)
-    {
+    while (i < l) {
         while (j != -1 && m[i] != m[j])
             j = nex[j];
         nex[++i] = ++j;
@@ -138,8 +136,8 @@ int i = 0, j = 0;
 while (i < ls) {
     while (j != -1 && s[i] != m[j])
         j = nex[j];
-    j++;
     i++;
+    j++;
     if (j == lm)
         cnt++;
 }
