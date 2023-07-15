@@ -6,17 +6,18 @@
 ## 背包
 ### 内层循环的下限优化（适用V较大的情况）
 
-```
+```cpp
 for (int i = 1; i <= n; i++)
-	cin >> c[i] >> w[i], s[i] = s[i - 1] + c[i];
+	std::cin >> c[i] >> w[i], s[i] = s[i - 1] + c[i];
 for (int i = 1; i <= n; i++) {
-	int bound = max(c[i], V - (s[n] - s[i]));
-	for (int j = V; j >= bound; j--)
-		f[j] = max(f[j], f[j - c[i]] + w[i]);
+	int bound = std::max(c[i], V - (s[n] - s[i]));
+	for (int j = V; j >= bound; j--) {
+		f[j] = std::max(f[j], f[j - c[i]] + w[i]);
+    }
 }
 ```
 ### 有依赖的背包模板
-```
+```cpp
 int dp[N], last[N];
 void solve() {
     int n = read(), V = read(); // n主件个数，V总钱数

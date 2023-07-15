@@ -1,6 +1,6 @@
 # 数据结构
 ## 并查集
-```
+```cpp
 int fa[N];
 int find(int x) {
 	return x == fa[x] ? x : fa[x] = find(fa[x]);
@@ -13,7 +13,7 @@ void merge(int u, int v) {
 ## 树上问题
 ### 直径
 两次dfs求直径
-```
+```cpp
 std::vector<int> e[N];
 int max, ith; // 最大长度和端点
 int deep[N], fat[N];
@@ -31,7 +31,7 @@ void dfs(int pos, int fa, int dep) {
 ```
 ### 重心
 所有子树的**最大节点数** **最小**的节点称为树的重心
-```
+```cpp
 std::vector<int> e[N];
 int min = INF, ith;
 int dfs(int pos, int fa) {
@@ -52,30 +52,35 @@ int dfs(int pos, int fa) {
 }
 ```
 ### LCA
-```
-for (int i = 1; i <= n; i++) // 预处理二进制位数，等于log2(i) + 1！
+```cpp
+for (int i = 1; i <= n; i++) { // 预处理二进制位数，等于log2(i) + 1
         lg[i] = lg[i - 1] + (1 << lg[i - 1] == i);
+}
 ```
-```
+```cpp
 std::vector<int> e[N];
 int lg[N];
 int fa[N][M], dep[N];
 void dfs(int pos, int fath) { // 记录深度和祖先
     fa[pos][0] = fath;
     dep[pos] = dep[fath] + 1;
-    for (int i = 1; i <= lg[dep[pos]]; i++)
+    for (int i = 1; i <= lg[dep[pos]]; i++) {
         fa[pos][i] = fa[fa[pos][i - 1]][i - 1]; // 2 = 1 + 1
-    for (auto i : e[pos])
+    }
+    for (auto i : e[pos]) {
         if (i != fath) dfs(i, pos);
+    }
 }
 int lca(int a, int b) {
     if (dep[a] < dep[b]) std::swap(a, b);
-    while (dep[a] > dep[b]) 
+    while (dep[a] > dep[b]) {
         a = fa[a][lg[dep[a] - dep[b]] - 1]; // 注意减一！
+    }
     if (a == b) return a;
-    for (int i = lg[dep[a]] - 1; i >= 0; i--) // 从大到小减
+    for (int i = lg[dep[a]] - 1; i >= 0; i--) { // 从大到小减
         if (fa[a][i] != fa[b][i])
             a = fa[a][i], b = fa[b][i];
+    }
     return fa[a][0];
 }
 ```
@@ -83,7 +88,7 @@ int lca(int a, int b) {
 利用递归回收标记，因为从下到上路径唯一
 
 对于每条链：起点++（包含递增），终点--（不包含递增）
-```
+```cpp
 int p[N];
 int dfs_sum(int pos, int fath) {
     int sum = p[pos];
@@ -99,7 +104,7 @@ int dfs_sum(int pos, int fath) {
 1. `a -> lca`
 2. `b -> lca`
 3. `lca -> fa[lca]`
-```
+```cpp
 int res = lca(a, b);
 int fath = fa[res][0];
 p[res]--;
@@ -111,7 +116,7 @@ p[b]++;
 拆成两条链看待：
 1. `a -> lca`
 2. `b -> lca`
-```
+```cpp
 int res = lca(a, b);
 p[a]++;
 p[b]++;
@@ -124,14 +129,14 @@ p[res] -= 2;
 + 1e7 24
 + 1e8 27
 + 1e9 30
-```
+```cpp
 int max[N][M];
 int query(int l, int r) {
     int k = log2(r - l + 1);
     return std::max(max[l][k], max[r - (1 << k) + 1][k]);
 }
 ```
-```
+```cpp
 for (int i = 1; i <= n; i++) cin >> max[i][0];
 for (int l = 1; l <= M; l++) {
     for (int i = 1; i + (1 << l) - 1 <= n; i++) {
@@ -142,10 +147,11 @@ for (int l = 1; l <= M; l++) {
 ## 树状数组
 `inline int lowbit(int x) { return x & -x; }`
 ### 单点修改，区间查询
-```
+```cpp
 void update(int x, int k, int n) {
-	for (int i = x; i <= n; i += lowbit(i))
+	for (int i = x; i <= n; i += lowbit(i)) {
 		t[i] += k;
+    }
 }
 int getsum(x) {
 	int sum = 0;
@@ -159,13 +165,13 @@ int getsum(x) {
 构造出原数组的差分数组，然后用树状数组维护（转换为单点修改，区间查询）
 
 利用差分数组的性质，其前缀和即为该元素本身
-```
+```cpp
 update(l, x, n);
 update(r + 1, -x, n);
 ```
 ### 区间修改，区间查询
 构造差分数组 $sum1 [ n ], sum2 = sum1 [ i ] * i;$ ( i 从1开始计数 )
-```
+```cpp
 void update(ll p, ll x) {
     for(int i = p; i <= n; i += lowbit(i))
         sum1[i] += x, sum2[i] += x * p;
@@ -184,7 +190,7 @@ ll range_getsum(ll l, ll r) {
 }
 ```
 ## 线段树
-```
+```cpp
 struct tree {
     int l, r, s, lz;
 } t[N << 2]; // 开四倍

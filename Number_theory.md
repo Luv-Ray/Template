@@ -9,7 +9,7 @@
 3. 若 $n$ 和 $i$ 互质, $o[i * n] = o[n] * o[i];$
 
 ### 线性筛
-```
+```cpp
 int st[N], primes[N], cnt;
 void get_primes(int n) {
 	for (int i = 2; i <= n; i++) {
@@ -24,7 +24,7 @@ void get_primes(int n) {
 }
 ```
 ### 线性筛同时求欧拉函数
-```
+```cpp
 int st[N], primes[N], o[N], cnt;
 void euler(int n) {
 	for (int i = 2; i <= n; i++) {
@@ -44,7 +44,7 @@ void euler(int n) {
 }
 ```
 ### 求单个欧拉函数
-```
+```cpp
 int euler(int n) {
 	int ans = n;
 	for (int i = 2; i <= n / i; i++) {
@@ -60,7 +60,7 @@ int euler(int n) {
 }
 ```
 ### 欧拉函数打表（效率同线性筛版）
-```
+```cpp
 int E[N];
 void n_euler_q(int n) {
 	for (int i = 2; i <= n; i++) {
@@ -75,7 +75,7 @@ void n_euler_q(int n) {
 }
 ```
 ### Miller_Rabin素数测试
-```
+```cpp
 bool MRtest(LL n) {
     if (n < 3 || n % 2 == 0)
         return n == 2; // 特判
@@ -107,7 +107,7 @@ bool MRtest(LL n) {
 #### 费马小定理
 如果 $p$ 是一个质数，而整数 $a$ 不是 $p$ 的倍数, 则有 $a ^{ p - 1 } \equiv 1 \pmod p$
 ### 扩展欧几里得
-```
+```cpp
 int exgcd(int a, int b, int &x, int &y) {
 	if (!b) {
 		x = 1, y = 0;
@@ -124,7 +124,7 @@ int exgcd(int a, int b, int &x, int &y) {
 1. $n\perp p$ 是逆元的存在条件，否则无解
 2. $p$ 不必为质数：扩展欧几里得
 3. 要求 $p$ 为质数：费马小定理 `qpow(n, m - 2, m)`，运行慢，基本不用
-```
+```cpp
 int inv(int n, int m) { // n的乘法逆元
 	int x, y;
 	exgcd(n, m, x, y);
@@ -132,7 +132,7 @@ int inv(int n, int m) { // n的乘法逆元
 }
 ```
 #### 线性求逆元
-```
+```cpp
 int inv[N];
 void n_inv(int n, int m) { // [1,n] 线性求逆元，使用范围同费马小定理
 	inv[1] = 1;
@@ -142,13 +142,13 @@ void n_inv(int n, int m) { // [1,n] 线性求逆元，使用范围同费马小�
 }
 ```
 ### 同余方程组
-```
+```cpp
 struct func {
     int m, r; // 对m取模余r
 } f[N];
 ```
 #### 中国剩余定理
-```
+```cpp
 int crt(int n) {
     int M = 1;
     for (int i = 0; i < n; i++)
@@ -162,7 +162,7 @@ int crt(int n) {
 }
 ```
 #### 扩展中国剩余定理
-```
+```cpp
 int excrt(int n) {
     int M = f[0].m;
     int A = f[0].r;
@@ -180,7 +180,7 @@ int excrt(int n) {
 ```
 ## 散装函数
 ### 快速幂
-```
+```cpp
 int qpow(int a, int b, int m) {
 	int res = 1;
 	while (b) {
@@ -193,7 +193,7 @@ int qpow(int a, int b, int m) {
 }
 ```
 ### 快速乘
-```
+```cpp
 LL qmul(LL a, LL b, LL mod) {
     LL c = (long double)a / mod * b;
     LL res = (ULL)a * b - (ULL)c * mod; // 用溢出解决溢出
@@ -201,19 +201,19 @@ LL qmul(LL a, LL b, LL mod) {
 }
 ```
 ### 最大公因数 $O(log(a + b))$
-```
+```cpp
 int gcd(int a, int b) {
 	return b ? gcd(b, a % b) : a;
 }
 ```
 ### 最小公倍数
-```
+```cpp
 int lcm(int a, int b) {
 	return a / gcd(a, b) * b;
 }
 ```
 ### 唯一分解定理
-```
+```cpp
 int num[N], prime[N]; // primes数组为筛好的质数
 void divide(int x) {
 	int cnt = 0;

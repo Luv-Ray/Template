@@ -88,45 +88,22 @@
 
 ## KMP
 ### next数组
-```
+```cpp
 char m[N];
 int nex[N];
 void get_nex(int l) {
     int i = 0, j = -1;
     nex[i] = j;
     while (i < l) {
-        while (j != -1 && m[i] != m[j])
+        while (j != -1 && m[i] != m[j]) {
             j = nex[j];
+        }
         nex[++i] = ++j;
     }
 }
 ```
-```
-char m[N];
-int nex[N];
-void quick_get_nex(int l) // 优化版next数组，抄的模板，不太理解
-{
-    int i = 1, j = 0; // 从1开始
-    nex[1] = 0;
-    while (i < l)
-    {
-        if (j == 0 || m[i - 1] == m[j - 1]) //-1是为了和string 从零开始相对应
-        {
-            i++, j++;
-            if (m[i - 1] != m[j - 1]) // 相同序列的第一位不同位不进行回溯，（已经不同了，回溯之后的位置的元素与它不同）
-            {
-                nex[i] = j;
-            }
-            else
-                nex[i] = nex[j]; // 跳过一次无意义的比较
-        }
-        else
-            j = nex[j];
-    }
-}
-```
 ### 主串与模式串的匹配
-```
+```cpp
 char m[N], s[N];
 int nex[N];
 int ls = strlen(s), lm = strlen(m);
@@ -134,12 +111,14 @@ get_nex(lm, m, nex);
 int cnt = 0;
 int i = 0, j = 0;
 while (i < ls) {
-    while (j != -1 && s[i] != m[j])
+    while (j != -1 && s[i] != m[j]) {
         j = nex[j];
+    }
     i++;
     j++;
-    if (j == lm)
+    if (j == lm) {
         cnt++;
+    }
 }
 ```
 ### next数组的周期性
@@ -151,7 +130,7 @@ while (i < ls) {
 
 4. `next[i]` 存在,循环节未必存在: 如 abcabcab 中, next[ 8 ] = 5, 但是对于 i 而言不存在循环节。但是 i - `next[i]` 必为重复的，只是最后的一段无法完全满足条件。8 - 5 == 3, 所以为 abc,abc 不断循环。
 ## Manacher
-```
+```cpp
 std::string s, str;
 int p[N];
 void init() {
@@ -181,7 +160,7 @@ int manacher() {
 ## 字符串哈希
 $P$ 一般取 $13331$ 或 $23333$，$MOD$ 为 $1e9+7$ 或 $1e9+9$
 ### 自然溢出
-```
+```cpp
 typedef unsigned long long ULL;
 char s[N];
 ULL hash[N], p[N]; // MOD为ULL上界，容易哈希冲突，不建议
@@ -198,7 +177,7 @@ ULL query(int l, int r) {
 }
 ```
 ### 双哈希
-```
+```cpp
 char s[N];
 LL hash1[N], hash2[N];
 LL p1[N], p2[N];
@@ -216,7 +195,7 @@ LL query(int l, int r, LL *p, LL *hash, const LL M) {
 }
 ```
 ## AC自动机
-```
+```cpp
 char s[N];
 char str[N];
 struct node {

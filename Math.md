@@ -1,7 +1,7 @@
 # 数学
 ## 线性代数
 ### 矩阵
-```
+```cpp
 struct Matrix {
     int a[N][N];
     inline void init() { // 零矩阵
@@ -14,7 +14,7 @@ struct Matrix {
 };
 ```
 #### 矩阵运算
-```
+```cpp
 //重载矩阵加法
 Matrix operator+(const Matrix &a, const Matrix &b) {
 	Matrix c;
@@ -74,7 +74,7 @@ bool operator!=(const Matrix &a, const Matrix &b) {
 }
 ```
 #### 矩阵快速幂
-```
+```cpp
 Matrix Mqpow(Matrix a, LL b) {
 	Matrix res;
 	res.unit();
@@ -87,7 +87,7 @@ Matrix Mqpow(Matrix a, LL b) {
 }
 ```
 ### 高斯消元
-```
+```cpp
 Matrix m;
 int r, c;
 cin >> r >> c;
@@ -132,7 +132,7 @@ for (int i = r - 2; i >= 0; i--) {
 ```
 ## 组合数学
 ### 求组合数
-```
+```cpp
 int fac[N], inv[N]
 void init(int n) { // 预处理逆元
 	fac[0] = inv[0] = 1;

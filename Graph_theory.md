@@ -1,7 +1,7 @@
 # 图论
 ## 存/建图
 ### 链式前向星 $O(m)$
-```
+```cpp
 struct edge {
 	int next, to, weight;
 } e[MAX];
@@ -20,14 +20,14 @@ void add(int u, int v, int w) {
 `if (dis[e[i].to] > dis[x] + e[i].weight)`
 ## 最小生成树
 ### Prim 稠密图 $O(n^2)$
-```
+```cpp
 int dis[N], vis[N], edge[N][N];
 int Prim(int pos) {
 	memset(dis, 0x3f, sizeof dis);
 	dis[pos] = 0;
-	for (int i = 1; i <= n; i ++) {
+	for (int i = 1; i <= n; i++) {
 		int cur = 0;
-		for (int j = 1; j <= n; j ++) {
+		for (int j = 1; j <= n; j++) {
 			if (!vis[j] && (!cur || dis[j] < dis[cur])) {
 				cur = j; // 寻找一个权值最小的点, 记录下标
 			}
@@ -43,13 +43,13 @@ int Prim(int pos) {
 }
 ```
 ### Prim 堆优化 $O(nlogn)$
-```
+```cpp
 typedef std::pair<int, int> PI;
 int dis[N], vis[N], edge[N][N];
 int Prim(int pos) {
 	memset(dis, 0x3f, sizeof dis);
 	dis[pos] = 0;
-	priority_queue<PI, std::vector<PI>, std::greater<PI> > q;
+	std::priority_queue<PI, std::vector<PI>, std::greater<PI> > q;
 	q.push({0, pos});
 	while (!q.empty()) {
 		int w = q.top().first, u = q.top().second;
@@ -68,7 +68,7 @@ int Prim(int pos) {
 }
 ```
 ### Kruskal 稀疏图 $O(mlogm)$
-```
+```cpp
 struct edge {
 	int u, v, w;
 } r[N];
@@ -94,7 +94,7 @@ int Kruskal(int m) {
 ```
 ## 最短路
 ### Dijkstra $O(n^2)$
-```
+```cpp
 for (int j = 1; j <= n; j ++ )
     if (!vis[j] && (t == -1 || dis[t] > dis[j])) // 遍历找到当前最短节点t
        t = j;
@@ -103,7 +103,7 @@ for (int j = 1; j <= n; j ++ )
     dis[j] = min(dis[j], dis[t] + e[t][j]); // 根据t更新dis
 ```
 ### Dijkstra 堆优化 $O(nlogn)$
-```
+```cpp
 typedef std::pair<int,int> PI;
 priority_queue<PI, std::vector<PI>, std::greater<PI> > q;
 while (!q.empty()) {
@@ -120,7 +120,7 @@ while (!q.empty()) {
 }
 ```
 ### SPFA $O(mn)$
-```
+```cpp
 int vis[N], dis[N], cnt[N];
 std::vector<std::pair<int, int> > e[N];
 bool SPFA() {
@@ -150,7 +150,7 @@ bool SPFA() {
 }
 ```
 ### Floyd $O(n^3)$
-```
+```cpp
 void Floyd() {
 	for (int k = 1; k <= n; k ++ ) // 三重循环更新各个点之间距离，k为中间媒介
 		for (int i = 1; i <= n; i ++ )
